@@ -10,6 +10,18 @@
 </div>
 {% endtemplate %}
 
+{% template error_state %}
+<div class="layout layout--col layout--center gap--small">
+  <span class="label">COULDN'T LOAD METRICS</span>
+  <span class="description" data-clamp="3">{{ error }}</span>
+</div>
+<div class="title_bar">
+  <img class="image image--adaptive" src="data:image/svg+xml;base64,{{ resend_logo | base64_encode }}" alt="Resend">
+  <span class="title">Resend</span>
+  <span class="instance">{{ range_label }}</span>
+</div>
+{% endtemplate %}
+
 {% comment %}
   Area chart of emails per day. Params: chart_id (use append_random), days, sent,
   height (px before device scaling), axes (false hides both axes for small views).

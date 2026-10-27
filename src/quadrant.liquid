@@ -1,3 +1,6 @@
+{% if error %}
+{% render "error_state", error: error, range_label: range_label, resend_logo: resend_logo %}
+{% else %}
 <div class="layout layout--col layout--center-y gap--medium">
   <div class="flex flex--col flex--left flex--top w--full">
     <span class="label label--small">EMAILS</span>
@@ -5,8 +8,9 @@
   </div>
   <div class="flex flex--col flex--left flex--top w--full">
     <span class="label label--small">DELIVERABILITY</span>
-    <span class="value value--tnums">{{ deliverability_rate }}%</span>
+    <span class="value value--tnums">{{ deliverability_rate }}</span>
   </div>
 </div>
 
 {% render "title_bar", range_label: range_label, resend_logo: resend_logo %}
+{% endif %}

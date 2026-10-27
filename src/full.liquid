@@ -1,6 +1,9 @@
 <script src="https://trmnl.com/js/highcharts/12.3.0/highcharts.js"></script>
 <script src="https://trmnl.com/js/highcharts/12.3.0/pattern-fill.js"></script>
 
+{% if error %}
+{% render "error_state", error: error, range_label: range_label, resend_logo: resend_logo %}
+{% else %}
 <div class="layout layout--col layout--top gap--medium">
   <div class="flex flex--row flex--top flex--between w--full">
     <div class="flex flex--row flex--top gap--xlarge">
@@ -10,17 +13,17 @@
       </div>
       <div class="flex flex--col flex--left flex--top">
         <span class="label">DELIVERABILITY</span>
-        <span class="value value--xlarge value--tnums">{{ deliverability_rate }}%</span>
+        <span class="value value--xlarge value--tnums">{{ deliverability_rate }}</span>
       </div>
     </div>
     <div class="flex flex--col flex--left flex--top gap--small">
       <div class="flex flex--col flex--left flex--top">
         <span class="label label--small">BOUNCES</span>
-        <span class="value value--small value--tnums">{{ bounce_rate }}%</span>
+        <span class="value value--small value--tnums">{{ bounce_rate }}</span>
       </div>
       <div class="flex flex--col flex--left flex--top">
         <span class="label label--small">COMPLAINTS</span>
-        <span class="value value--small value--tnums">{{ complaint_rate }}%</span>
+        <span class="value value--small value--tnums">{{ complaint_rate }}</span>
       </div>
     </div>
   </div>
@@ -31,3 +34,4 @@
 
 {% render "title_bar", range_label: range_label, resend_logo: resend_logo %}
 {% render "area_chart", chart_id: chart_id, days: days, sent: sent, height: 290, axes: true %}
+{% endif %}

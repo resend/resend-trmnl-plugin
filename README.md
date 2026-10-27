@@ -1,6 +1,8 @@
 # Resend for TRMNL
 
-The official [Resend](https://resend.com) plugin for [TRMNL](https://trmnl.com) e-ink displays. See your email volume and deliverability at a glance, the same numbers as your Resend [metrics dashboard](https://resend.com/metrics).
+The official [Resend](https://resend.com) plugin for [TRMNL](https://trmnl.com) e-ink displays.
+
+See your email volume and deliverability at a glance, the same numbers as your Resend [metrics dashboard](https://resend.com/metrics).
 
 ![Resend on TRMNL](_build/full.png)
 

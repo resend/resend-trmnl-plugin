@@ -38,11 +38,11 @@ The plugin adapts to every TRMNL layout, so it works on its own or in a mashup w
 
 ## Setup
 
-1. In Resend, create an API key with **Full access** at [resend.com/api-keys](https://resend.com/api-keys).
-2. In TRMNL, add the Resend plugin and paste the key into **API Key**.
+1. In TRMNL, add the Resend plugin and click **Connect**.
+2. Sign in to Resend and approve access for your team.
 3. Add the plugin to a playlist.
 
-If the key is missing or invalid, the screen shows "Couldn't load metrics" with the error from Resend.
+If access is revoked or expires, the screen shows "Couldn't load metrics" with the error from Resend.
 
 ## Development
 
@@ -50,7 +50,7 @@ The plugin is built with [trmnlp](https://github.com/usetrmnl/trmnlp), TRMNL's l
 
 ```
 src/
-├── settings.yml            # polling URL, headers and settings fields
+├── settings.yml            # polling URL, OAuth and settings fields
 ├── transform.js            # reshapes the Metrics API response for the views
 ├── shared.liquid           # title bar, error state and chart, shared by all views
 ├── full.liquid
@@ -59,21 +59,18 @@ src/
 └── quadrant.liquid
 ```
 
-To preview against your own account, put a Resend API key in `.env` and create `.trmnlp.yml`:
+To preview against your own account, put the OAuth client credentials in `.env` (gitignored). The client needs `http://localhost:4567/oauth/callback` as a redirect URI.
 
 ```sh
-echo 'RESEND_API_KEY=re_xxxxxxxxx' > .env
-cat > .trmnlp.yml <<'EOF'
-watch:
-  - src
-custom_fields:
-  api_key: "{{ env.RESEND_API_KEY }}"
+cat > .env <<'EOF'
+TRMNL_OAUTH_CLIENT_ID=your-client-id
+TRMNL_OAUTH_CLIENT_SECRET=your-client-secret
 EOF
 
 docker run --rm -p 4567:4567 --env-file .env -v "$(pwd):/plugin" trmnl/trmnlp serve
 ```
 
-Then open [localhost:4567](http://localhost:4567). Both files are gitignored.
+Then open [localhost:4567](http://localhost:4567) and click **Connect account**.
 
 To regenerate the images in this README from sample data, run:
 

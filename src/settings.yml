@@ -1,26 +1,33 @@
 ---
-name: Resend
-description: Email metrics from Resend
 strategy: polling
 no_screen_padding: 'no'
 dark_mode: 'no'
-framework_version: latest
-refresh_interval: 15
-polling_verb: get
-# Last 15 days (today plus the 14 before), matching the Resend dashboard's default range.
-polling_url: 'https://api.resend.com/emails/metrics?start_date={{ "now" | date: "%s" | minus: 1209600 | date: "%Y-%m-%d" }}&metrics=sent,delivery_rate,bounce_rate,complaint_rate&dimensions=period&granularity=daily&timezone={{ trmnl.user.time_zone_iana }}'
-polling_headers: 'authorization=Bearer {{ api_key }}'
 static_data: ''
+polling_verb: get
+framework_version: latest
+serverless_language: node
+refresh_interval_floor:
+polling_url: 'https://api.resend.com/emails/metrics?start_date={{ "now" | date: "%s" | minus: 1209600 | date: "%Y-%m-%d" }}&metrics=sent,delivery_rate,bounce_rate,complaint_rate&dimensions=period&granularity=daily&timezone={{ trmnl.user.time_zone_iana }}'
+# TRMNL never returns headers, so `trmnlp pull` and `push` blank this line. Restore it before committing.
+polling_headers: 'authorization=Bearer {{ oauth_access_token }}'
+polling_body:
+id: 521360
+# Resend OAuth 2.1 + PKCE. The metrics endpoint needs full_access (the only other scope is emails:send).
+# Client ID and secret are set in TRMNL's OAuth settings, or TRMNL_OAUTH_CLIENT_ID/SECRET for trmnlp.
+oauth_enabled: 'true'
+# TRMNL reads 'yes'/'no' here; 'true' leaves PKCE off and Resend rejects the authorize request.
+oauth_pkce_enabled: 'yes'
+oauth_authorize_url: https://api.resend.com/oauth/authorize
+oauth_token_url: https://api.resend.com/oauth/token
+oauth_scopes: full_access
 custom_fields:
-  - keyname: about
-    name: About This Plugin
-    field_type: author_bio
-    category: analytics
-    description: Email volume and deliverability rate from your Resend account, on your TRMNL.
-    github_url: https://github.com/resend/resend-trmnl-plugin
-    learn_more_url: https://resend.com
-  - keyname: api_key
-    field_type: password
-    name: API Key
-    description: A Resend API key with Full access. Create one at <a href="https://resend.com/api-keys">resend.com/api-keys</a>.
-    placeholder: re_xxxxxxxxx
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: analytics
+  description: Email volume and deliverability rate from your Resend account, on your TRMNL.
+  github_url: https://github.com/resend/resend-trmnl-plugin
+  learn_more_url: https://resend.com
+name: Resend
+description: Email metrics from Resend
+refresh_interval: 15

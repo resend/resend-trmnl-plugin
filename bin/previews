@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# Renders the README preview images into _build/ from the sample data in
+# preview/sample.trmnlp.yml, as a 1-bit TRMNL OG shows them. Needs Docker.
+#
+# `trmnlp build --png` renders grays flat and then thresholds them to white, so
+# this asks the trmnlp server for the 1-bit device mode instead.
+
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+IMAGE=trmnl/trmnlp
+NAME=trmnlp-previews
+PORT=4568
+CLASSES="screen%20screen--1bit%20screen--og%20screen--md"
+
+docker rm -f "$NAME" > /dev/null 2>&1 || true
+docker run -d --name "$NAME" --publish "$PORT:4567" \
+    --volume "$PWD:/plugin" \
+    --volume "$PWD/preview/sample.trmnlp.yml:/plugin/.trmnlp.yml:ro" \
+    "$IMAGE" serve > /dev/null
+trap 'docker rm -f "$NAME" > /dev/null' EXIT
+
+for _ in $(seq 1 60); do
+    curl -sf -o /dev/null "http://localhost:$PORT/" && break
+    sleep 1
+done
+
+mkdir -p _build
+for view in full half_horizontal half_vertical quadrant; do
+    curl -sf -o "_build/$view.png" "http://localhost:$PORT/render/$view.png?screen_classes=$CLASSES&color_depth=1"
+done
+
+# Every view renders on an 800x480 screen; crop the smaller ones to their own size.
+docker run --rm --volume "$PWD/_build:/build" --workdir /build --entrypoint sh "$IMAGE" -c '
+    magick half_horizontal.png -crop 800x240+0+0 +repage half_horizontal.png
+    magick half_vertical.png -crop 400x480+0+0 +repage half_vertical.png
+    magick quadrant.png -crop 400x240+0+0 +repage quadrant.png
+'
+
+echo "Wrote _build/{full,half_horizontal,half_vertical,quadrant}.png"

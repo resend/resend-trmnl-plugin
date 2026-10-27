@@ -1,0 +1,30 @@
+# trmnlp config used by bin/previews to render the README images.
+# `variables` stands in for a Metrics API response, so previews go through
+# the real transform and templates without exposing any account's numbers.
+---
+watch: false
+variables:
+  object: metrics
+  start_date: "2026-10-13T00:00:00.000Z"
+  end_date: "2026-10-27T15:00:00.000Z"
+  totals:
+    sent: 814831
+    delivery_rate: 99.12
+    bounce_rate: 0.61
+    complaint_rate: 0.02
+  data:
+    - { period: "2026-10-13", sent: 62480 }
+    - { period: "2026-10-14", sent: 63112 }
+    - { period: "2026-10-15", sent: 56390 }
+    - { period: "2026-10-16", sent: 54021 }
+    - { period: "2026-10-17", sent: 41207 }
+    - { period: "2026-10-18", sent: 43150 }
+    - { period: "2026-10-19", sent: 62744 }
+    - { period: "2026-10-20", sent: 60318 }
+    - { period: "2026-10-21", sent: 67902 }
+    - { period: "2026-10-22", sent: 62215 }
+    - { period: "2026-10-23", sent: 59130 }
+    - { period: "2026-10-24", sent: 42086 }
+    - { period: "2026-10-25", sent: 45512 }
+    - { period: "2026-10-26", sent: 68630 }
+    - { period: "2026-10-27", sent: 25934 }

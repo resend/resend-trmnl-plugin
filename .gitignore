@@ -12,9 +12,10 @@ Thumbs.db
 .env.*
 !.env.example
 
-# Local TRMNL preview (trmnlp)
+# Local TRMNL preview (trmnlp). _build/ keeps only the README images from bin/previews.
 .trmnlp.yml
-_build/
+_build/*
+!_build/*.png
 
 # Logs
 *.log

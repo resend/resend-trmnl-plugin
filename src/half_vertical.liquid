@@ -15,7 +15,7 @@
   </div>
 
   {% assign chart_id = "chart" | append_random %}
-  <div id="{{ chart_id }}" class="w--full"></div>
+  <div id="{{ chart_id }}" class="w--full grow"></div>
 
   <div class="flex flex--row flex--left flex--top gap--xlarge w--full">
     <div class="flex flex--col flex--left flex--top">
@@ -30,5 +30,5 @@
 </div>
 
 {% render "title_bar", range_label: range_label, resend_logo: resend_logo %}
-{% render "area_chart", chart_id: chart_id, days: days, sent: sent, height: 110, axes: false %}
+{% render "area_chart", chart_id: chart_id, days: days, sent: sent, axes: false %}
 {% endif %}

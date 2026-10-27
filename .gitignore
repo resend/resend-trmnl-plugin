@@ -19,3 +19,6 @@ _build/*
 
 # Logs
 *.log
+
+# trmnlp test --report output
+report/

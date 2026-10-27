@@ -24,7 +24,8 @@
 
 {% comment %}
   Area chart of emails per day. Params: chart_id (use append_random), days, sent,
-  height (px before device scaling), axes (false hides both axes for small views).
+  axes (false hides both axes for small views). The chart fills its container,
+  so give the container the space it should take (e.g. `grow`).
 {% endcomment %}
 {% template area_chart %}
 <script>
@@ -47,7 +48,7 @@
       TRMNLCharts.watch(el, function () {
         var fill = TRMNLCharts.paint("gray-60", { el: el });
         var chart = Highcharts.chart(el, TRMNLCharts.merge(TRMNLCharts.options({ el: el }), {
-          chart: { type: "area", animation: false, height: TRMNLPaint.px({{ height }}, { el: el }) },
+          chart: { type: "area", animation: false, height: null },
           xAxis: { visible: axes, categories: days, tickInterval: 2, gridLineWidth: 0 },
           yAxis: {
             visible: axes,

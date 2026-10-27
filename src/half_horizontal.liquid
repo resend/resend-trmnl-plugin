@@ -1,0 +1,21 @@
+<script src="https://trmnl.com/js/highcharts/12.3.0/highcharts.js"></script>
+<script src="https://trmnl.com/js/highcharts/12.3.0/pattern-fill.js"></script>
+
+<div class="layout layout--row layout--center-y gap--large">
+  <div class="flex flex--row flex--top gap--large no-shrink">
+    <div class="flex flex--col flex--left flex--top">
+      <span class="label">EMAILS</span>
+      <span class="value value--large value--tnums">{{ emails | number_with_delimiter }}</span>
+    </div>
+    <div class="flex flex--col flex--left flex--top">
+      <span class="label">DELIVERABILITY</span>
+      <span class="value value--large value--tnums">{{ deliverability_rate }}%</span>
+    </div>
+  </div>
+
+  {% assign chart_id = "chart" | append_random %}
+  <div id="{{ chart_id }}" class="grow"></div>
+</div>
+
+{% render "title_bar", range_label: range_label, resend_logo: resend_logo %}
+{% render "area_chart", chart_id: chart_id, days: days, sent: sent, height: 120, axes: false %}

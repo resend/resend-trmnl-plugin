@@ -1,0 +1,28 @@
+---
+name: Resend
+description: Email metrics from Resend
+strategy: static
+no_screen_padding: 'no'
+dark_mode: 'no'
+framework_version: latest
+refresh_interval: 15
+# Sample data in the shape the Metrics API transform will produce.
+# Replaced by polling https://api.resend.com/emails/metrics once the layout is settled.
+static_data: |-
+  {
+    "emails": 752351,
+    "deliverability_rate": 99.12,
+    "bounce_rate": 0.61,
+    "complaint_rate": 0.02,
+    "range_label": "Last 14 days",
+    "days": ["Oct 14", "Oct 15", "Oct 16", "Oct 17", "Oct 18", "Oct 19", "Oct 20", "Oct 21", "Oct 22", "Oct 23", "Oct 24", "Oct 25", "Oct 26", "Oct 27"],
+    "sent": [63112, 56390, 54021, 41207, 43150, 62744, 60318, 67902, 62215, 59130, 42086, 45512, 68630, 25934]
+  }
+custom_fields:
+  - keyname: about
+    name: About This Plugin
+    field_type: author_bio
+    category: analytics
+    description: Email volume and deliverability rate from your Resend account, on your TRMNL.
+    github_url: https://github.com/resend/resend-trmnl-plugin
+    learn_more_url: https://resend.com
